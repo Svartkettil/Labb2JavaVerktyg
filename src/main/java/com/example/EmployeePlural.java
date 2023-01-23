@@ -2,12 +2,12 @@ package com.example;
 
 import java.util.List;
 
-public class Employees {
+public class EmployeePlural {
 
 	private final EmployeeRepository employeeRepository;
 	private final BankService bankService;
 
-	public Employees(EmployeeRepository employeeRepository, BankService bankService) {
+	public EmployeePlural(EmployeeRepository employeeRepository, BankService bankService) {
 		this.employeeRepository = employeeRepository;
 		this.bankService = bankService;
 	}
