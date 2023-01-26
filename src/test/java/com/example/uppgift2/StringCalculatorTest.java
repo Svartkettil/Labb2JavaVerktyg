@@ -26,5 +26,10 @@ class StringCalculatorTest {
     void addingTwoNumbersShouldBeSeparatedByCommaAndSummarizeTheNumbers(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
+    @ParameterizedTest(name = "{index} => ''{0}'' is {1}")
+    @CsvSource({"'1,0,1', 2", "'1,-2,3,4', 6", "'10,-3,-4,-1,-5', -3"})
+    void addingMoreThanTwoNumbersShouldBeSeparatedByCommaAndSummarizeTheNumbers(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
+    }
 
 }

@@ -9,7 +9,7 @@ public class StringCalculator {
         int[] multipleNumbers = Arrays.stream(numbers.split(",")).mapToInt(Integer::parseInt).toArray();
         if (multipleNumbers.length == 1)
             return multipleNumbers[0];
-        return multipleNumbers[0] + multipleNumbers[1];
+        return Arrays.stream(multipleNumbers).sum();
     }
 
 }
