@@ -31,5 +31,9 @@ class StringCalculatorTest {
     void addingMoreThanTwoNumbersShouldBeSeparatedByCommaAndSummarizeTheNumbers(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
-
+    @ParameterizedTest
+    @CsvSource({"'0\n1', 1", "'2\n-1,3', 4"})
+    void usingLineBreaksAlsoWorksAsSeparators(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
+    }
 }
