@@ -36,4 +36,10 @@ class StringCalculatorTest {
     void usingLineBreaksAlsoWorksAsSeparators(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
+    @ParameterizedTest(name = "{index} => ''{0}'' is {1}")
+    @CsvSource({"'//;\n1;3', 4", "'//r\n3,2r1', 6"})
+    void usingTwoDashesMakesNextCharacterWorkAsASeparator(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
+    }
+
 }
