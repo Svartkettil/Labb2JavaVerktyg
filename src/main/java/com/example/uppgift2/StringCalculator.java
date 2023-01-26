@@ -10,21 +10,22 @@ public class StringCalculator {
             return 0;
         if (numbers.startsWith("//")) {
             final var delimiter = numbers.substring(2,3);
-            int[] multipleNumbers = Arrays.stream(numbers.substring(4)
-                    .split(",|\\n|" + delimiter))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            checkIfNegative(multipleNumbers);
-            return Arrays.stream(multipleNumbers).sum();
+            return getSumFromString(numbers.substring(4), ",|\\n|" + delimiter);
         }
         else {
-            int[] multipleNumbers = Arrays.stream(numbers.split(",|\\n"))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
-            checkIfNegative(multipleNumbers);
-            return Arrays.stream(multipleNumbers).sum();
+            return getSumFromString(numbers, ",|\\n");
         }
     }
+
+    private int getSumFromString(String numbers, String delimiter) {
+        int[] multipleNumbers = Arrays.stream(numbers
+                .split(delimiter))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        checkIfNegative(multipleNumbers);
+        return Arrays.stream(multipleNumbers).sum();
+    }
+
     public void checkIfNegative(int[] numbers){
         List<Integer> negatives = new ArrayList<>();
         for (int number : numbers) {
