@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringCalculatorTest {
@@ -22,17 +23,17 @@ class StringCalculatorTest {
 
     }
     @ParameterizedTest(name = "{index} => ''{0}'' is {1}")
-    @CsvSource({"'1,0', 1", "'1,2', 3", "'10,-2', 8"})
+    @CsvSource({"'1,0', 1", "'1,2', 3", "'10,2', 12"})
     void addingTwoNumbersShouldBeSeparatedByCommaAndSummarizeTheNumbers(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
     @ParameterizedTest(name = "{index} => ''{0}'' is {1}")
-    @CsvSource({"'1,0,1', 2", "'1,-2,3,4', 6", "'10,-3,-4,-1,-5', -3"})
+    @CsvSource({"'1,0,1', 2", "'1,2,3,4', 10", "'10,3,4,1,5', 23"})
     void addingMoreThanTwoNumbersShouldBeSeparatedByCommaAndSummarizeTheNumbers(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
     @ParameterizedTest
-    @CsvSource({"'0\n1', 1", "'2\n-1,3', 4"})
+    @CsvSource({"'0\n1', 1", "'2\n1,3', 6"})
     void usingLineBreaksAlsoWorksAsSeparators(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
@@ -41,5 +42,11 @@ class StringCalculatorTest {
     void usingTwoDashesMakesNextCharacterWorkAsASeparator(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
-
+    @ParameterizedTest
+    @CsvSource({"'1,-3', '[-3]'", "'-3,-4,2', '[-3, -4]'", "'1,1,2,-1,-1,-1', '[-1, -1, -1]'" })
+    void addingNegativeNumbersThrowsAnException(String testString, String expected){
+        assertThatThrownBy(()->stringCalculator.add(testString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("negatives not allowed: " + expected);
+    }
 }
