@@ -15,5 +15,11 @@ class StringCalculatorTest {
     void addingZeroInputResultsInZeroOutput() {
         assertThat(stringCalculator.add("")).isEqualTo(0);
     }
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "0", "10"})
+    void addingOneNumberResultsInTheSameNumber(String testString){
+        assertThat(stringCalculator.add(testString)).isEqualTo(Integer.parseInt(testString));
+
+    }
 
 }
