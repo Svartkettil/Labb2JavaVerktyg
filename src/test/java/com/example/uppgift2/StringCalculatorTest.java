@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StringCalculatorTest {
     StringCalculator stringCalculator = new StringCalculator();
@@ -43,10 +42,15 @@ class StringCalculatorTest {
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
     @ParameterizedTest
-    @CsvSource({"'1,-3', '[-3]'", "'-3,-4,2', '[-3, -4]'", "'1,1,2,-1,-1,-1', '[-1, -1, -1]'" })
+    @CsvSource({"'1,-3', '[-3]'", "'//p\n-3,-4p2', '[-3, -4]'", "'1,1,2,-1,-1,-1', '[-1, -1, -1]'" })
     void addingNegativeNumbersThrowsAnException(String testString, String expected){
         assertThatThrownBy(()->stringCalculator.add(testString))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("negatives not allowed: " + expected);
+    }
+    @ParameterizedTest
+    @CsvSource({"'1000','0'", "'999,5000', '999'", "'999,2,1', 1002"})
+    void numbersOverThousandShouldBeIgnored(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
 }

@@ -21,6 +21,7 @@ public class StringCalculator {
         int[] multipleNumbers = Arrays.stream(numbers
                 .split(delimiter))
                 .mapToInt(Integer::parseInt)
+                .filter((i) -> i<1000)
                 .toArray();
         checkIfNegative(multipleNumbers);
         return Arrays.stream(multipleNumbers).sum();
