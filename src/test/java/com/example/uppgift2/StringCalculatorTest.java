@@ -53,4 +53,11 @@ class StringCalculatorTest {
     void numbersOverThousandShouldBeIgnored(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
+    @ParameterizedTest
+    @CsvSource({"'//[***]\n2***4***1', '7'", "'//[9po]\n9999po2,1001', '1001'"})
+    void delimitersCanBeOfAnyLength(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
+    }
+
 }
+

@@ -9,25 +9,32 @@ public class StringCalculator {
         if (numbers.equals(""))
             return 0;
         if (numbers.startsWith("//")) {
-            final var delimiter = numbers.substring(2,3);
-            return getSumFromString(numbers.substring(4), ",|\\n|" + delimiter);
-        }
-        else {
+            numbers = numbers.substring(2);
+            var numbersArray = numbers.split("\n", 2);
+            String delimiter = numbersArray[0];
+            delimiter = delimiter.replace("[", "(")
+                    .replace("]", ")")
+                    .replace("*", "\\*");
+            return getSumFromString(numbersArray[1], ",|\\n|" + delimiter);
+        } else {
             return getSumFromString(numbers, ",|\\n");
         }
+
+
     }
 
     private int getSumFromString(String numbers, String delimiter) {
+        System.out.println(numbers);
         int[] multipleNumbers = Arrays.stream(numbers
-                .split(delimiter))
+                        .split(delimiter))
                 .mapToInt(Integer::parseInt)
-                .filter((i) -> i<1000)
+                .filter((i) -> i < 1000)
                 .toArray();
         checkIfNegative(multipleNumbers);
         return Arrays.stream(multipleNumbers).sum();
     }
 
-    public void checkIfNegative(int[] numbers){
+    public void checkIfNegative(int[] numbers) {
         List<Integer> negatives = new ArrayList<>();
         for (int number : numbers) {
             if (number < 0)
