@@ -5,27 +5,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StringCalculator {
+    static String delimiter = ",|\\n";
+
     public int add(String numbers) {
         if (numbers.equals(""))
             return 0;
-        if (numbers.startsWith("//")) {
-            numbers = numbers.substring(2);
-            var numbersArray = numbers.split("\n", 2);
-            String delimiter = numbersArray[0];
-            delimiter = delimiter.replace("[", "(")
-                    .replace("]", ")")
-                    .replace("*", "\\*")
-                    .replace(")(", ")|(");
-            return getSumFromString(numbersArray[1], ",|\\n|" + delimiter);
-        } else {
-            return getSumFromString(numbers, ",|\\n");
-        }
-
-
+        else if (numbers.startsWith("//"))
+            return extractDelimimimimimiter(numbers);
+        else
+            return getSumFromString(numbers);
     }
 
-    private int getSumFromString(String numbers, String delimiter) {
-        System.out.println(delimiter);
+    private int extractDelimimimimimiter(String numbers) {
+        numbers = numbers.substring(2);
+        var numbersArray = numbers.split("\n", 2);
+        delimiter = delimiter + "|" + numbersArray[0].replace("[", "(")
+                .replace("]", ")")
+                .replace("*", "\\*")
+                .replace(")(", ")|(");
+        return getSumFromString(numbersArray[1]);
+    }
+
+    private int getSumFromString(String numbers) {
         int[] multipleNumbers = Arrays.stream(numbers
                         .split(delimiter))
                 .mapToInt(Integer::parseInt)
@@ -42,8 +43,7 @@ public class StringCalculator {
                 negatives.add(number);
         }
         if (!negatives.isEmpty()) {
-            String message = "negatives not allowed: " + negatives;
-            throw new IllegalArgumentException(message);
+            throw new IllegalArgumentException("negatives not allowed: " + negatives);
         }
     }
 }
