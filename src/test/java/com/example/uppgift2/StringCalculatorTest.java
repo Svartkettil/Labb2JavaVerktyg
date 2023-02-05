@@ -58,6 +58,11 @@ class StringCalculatorTest {
     void delimitersCanBeOfAnyLength(String testString, int expected){
         assertThat(stringCalculator.add(testString)).isEqualTo(expected);
     }
+    @ParameterizedTest
+    @CsvSource({"'//[***][321]\n23214***1', '7'", "'//[9po][ħˀĸ]\n9999po2ħˀĸ1001', '1001'"})
+    void thereCanBeMultipleDelimitersOfAnyLength(String testString, int expected){
+        assertThat(stringCalculator.add(testString)).isEqualTo(expected);
+    }
 
 }
 

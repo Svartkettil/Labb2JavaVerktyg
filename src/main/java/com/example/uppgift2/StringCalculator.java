@@ -14,7 +14,8 @@ public class StringCalculator {
             String delimiter = numbersArray[0];
             delimiter = delimiter.replace("[", "(")
                     .replace("]", ")")
-                    .replace("*", "\\*");
+                    .replace("*", "\\*")
+                    .replace(")(", ")|(");
             return getSumFromString(numbersArray[1], ",|\\n|" + delimiter);
         } else {
             return getSumFromString(numbers, ",|\\n");
@@ -24,7 +25,7 @@ public class StringCalculator {
     }
 
     private int getSumFromString(String numbers, String delimiter) {
-        System.out.println(numbers);
+        System.out.println(delimiter);
         int[] multipleNumbers = Arrays.stream(numbers
                         .split(delimiter))
                 .mapToInt(Integer::parseInt)
